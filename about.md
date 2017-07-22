@@ -35,6 +35,8 @@ There are few things more exciting or potentially revolutionary than machine lea
 
 * <a href="https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/leaderboard">**Cats & Dogs Redux Classification:**</a> An amusing Kaggle challenge, competiters were tasked to distinguish between cats and dogs in several hundred thousand images. My model achieve a loss of .46, placing it in the top half of all submissions.
 
+* <a href="https://www.kaggle.com/c/cifar-10/leaderboard">**CIFAR-10 Classification:**</a> A classification challenge on the classic CIFAR-10 dataset of color images. 10 class, tens of thousands of images. My first model achieved a loss of 0.75810, placing it in the top half of all submissions. 
+
 ### Contact me
 
 [ja3067@columbia.com](mailto:ja3067@columbia.edu.com)
