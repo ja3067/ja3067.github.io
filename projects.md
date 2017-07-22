@@ -1,5 +1,3 @@
-# Projects
-
 *Disclaimer:* I will try to keep this list updated, but please check my github for my latest projects. 
 
 ## Tensorflow/Keras Neural Networks and Tutorials
