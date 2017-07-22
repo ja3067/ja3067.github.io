@@ -98,6 +98,10 @@ ul ul, ol ul {
   list-style-type: circle;
 }
 
+.extra_padding > li {
+  padding-top: 5px;
+}
+
 em, i {
   font-style: italic;
 }

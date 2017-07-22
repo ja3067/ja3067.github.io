@@ -16,11 +16,12 @@ There are few things more exciting or potentially revolutionary than machine lea
   - Writing software which performs computational simulations of stellarator fusion reactors in C++, Python, and FORTRAN, and designing circuits for the main reactor field coils in LTSpice (and, god forbid, on a breadboard).
   - Writing a Python API for large segments of the Princeton Plasma Physics Laboratory (PPPL) FORTRAN VMEC library, and implementing custom optimization software for finding plasma volume extrema.
   - Using Labview and C to write real-time control software for stabilizing high currents in the stellarator field coils,
-  
+<div class="extra_padding" markdown="1">  
 * **Research Assistant** in the Barnard Chemistry Department (Fall 2015 - Present)
   - Mass spectrometry, florescent microscopy, and computational data analysis in a biochemistry/neurochemistry setting.
   - Trained a neural network to perform clustering and colocalization analysis on florescent microscopy samples of mice brain tissue.
   - Analyzed and sanitized data in R and Pandas.
+</div>
 
 ### Other Experience
 
