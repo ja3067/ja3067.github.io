@@ -28,6 +28,12 @@ There are few things more exciting or potentially revolutionary than machine lea
 * Member of the Columbia Society of Physics Students (SPS), and computation fluid dynamics (CFD) and computer aided design (CAD) instructor at Columbia.
 * Classical pianist and chamber musician, who has performed at Carnegie Hall and Symphony Space in NYC.
 
+### Kaggle Competitions:
+
+* <a href="https://www.kaggle.com/c/digit-recognizer/leaderboard">**MNIST Digit Recognizer:**</a> A simple hand-written digit recognition challenge using the MNIST dataset. My deep convolution network achieved 98.957% accuracy, well above human accuracy, placing it in the top third of all submissions as of 7/22/2017. 
+
+* <a href="https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/leaderboard">**Cats & Dogs Redux Classification:**</a> An amusing Kaggle challenge, competiters were tasked to distinguish between cats and dogs in several hundred thousand images. My model achieve a loss of .46, placing it in the top half of all submissions.
+
 ### Contact me
 
 [ja3067@columbia.com](mailto:ja3067@columbia.edu.com)
