@@ -8,6 +8,8 @@ I'm a second year undergraduate in computer science, math, and physics at Columb
 
 There are few things more exciting or potentially revolutionary than machine learning right now, and I'm trying to get involved and contribute to that revolution however I can. I also want to make the process of learning how to use machine learning tools easier, and I will try to update this site with my latest projects and instructional tutorials about machine learning and cool math topics. Please feel free to reach out if you have any questions.
 
+------
+
 ### Internships
 
 * **Undergraduate Researcher** at the Columbia Plasma Physics Laboratory (May 2017 - Present) 
