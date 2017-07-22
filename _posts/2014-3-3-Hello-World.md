@@ -1,10 +1,8 @@
 ---
 layout: post
-title: You're up and running!
+title: Exploring LSTMs
 ---
 
-Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
+The past week has seen me diving headfirst into the world of Recurrent Neural Networks (or RNNs), networks capable of sequential learning. Humans are amazing at learning because we learn in context; we can remember and contextualize a word in a sentence that last appeared pages ago. Our neural networks should be able to do the same thing. 
 
-![_config.yml]({{ site.baseurl }}/images/config.png)
-
-The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
+RNN inputs are sequences - like sentences, which are sequences of characters or words, or even images, which are sequences of pixels. Despite this apparent complication, they tend to be structurally simpler than the convolution networks used in image classification. 
