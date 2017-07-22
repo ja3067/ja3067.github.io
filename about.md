@@ -19,8 +19,8 @@ There are few things more exciting or potentially revolutionary than machine lea
   
 * **Research Assistant** in the Barnard Chemistry Department (Fall 2015 - Present)
   - Mass spectrometry, florescent microscopy, and computational data analysis in a biochemistry/neurochemistry setting.
-  - Learned a great deal of bio and neurochemistry, and trained a neural network to perform clustering a colocalization analysis on florescent microscopy samples.
-  - Exposure to R and Pandas.
+  - Trained a neural network to perform clustering and colocalization analysis on florescent microscopy samples of mice brain tissue.
+  - Analyzed and sanitized data in R and Pandas.
 
 ### Other Experience
 
