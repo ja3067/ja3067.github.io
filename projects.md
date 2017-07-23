@@ -7,7 +7,7 @@ permalink: /projects/
 *Disclaimer:* I will try to keep this list updated, but please check my github for my latest projects. 
 
 
-## Projects:
+## Networks:
 
 * <a href="https://github.com/ja3067/char-rnn-tensorflow">**Char-RNN:**</a> My latest project is a general-purpose character-level Long Short-Term Memory (LSTM) RNN for learning from and interpreting text, which can be trained on any large text dataset with good performance and excellent results.
 
