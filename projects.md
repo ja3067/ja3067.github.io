@@ -23,7 +23,7 @@ Other side-projects include <a href="https://github.com/ja3067/demos/blob/master
 
 * <a href="https://github.com/ja3067/tensorflow-keras-tutorials/blob/master/CNN%20Tutorial%20MNIST.ipynb">**MNIST CNN Classifier Tutorial:**</a> This notebook is a simple tutorial introduction to image classification in Keras, using the MNIST dataset. We cover fully connected networks, various CNNs, and hidden layer visualization to help understand how the model learns.
 
-* <a href="https://github.com/ja3067/tensorflow-keras-tutorials/blob/master/SGD%20Linear%20Regression%20in%20Numpy%20Tutorial.ipynb">**Introduction to SGD, Vectorization, and Linear Regression in Numpy:**</a> In this tutorial, we implement the "backpropogation" algorithm for simple linear regression on MNIST, first by looping over the weights, and then using a vectorized implementation in Numpy. We talk about the calculus of Stochastic Gradient Descent, and prepare for a logistic regression implementation in the next tutorial. For anyone interesting in actually doing Machine Learning by hand, without a framework, or in understanding what Tensorflow is actually doing, this should be helpful.
+* <a href="https://github.com/ja3067/tensorflow-keras-tutorials/blob/master/SGD%20Linear%20Regression%20in%20Numpy%20Tutorial.ipynb">**Introduction to SGD, Vectorization, and Linear Regression in Numpy:**</a> In this tutorial, we implement the "backpropogation" algorithm for a simple linear regression model on MNIST, first using an iterative approach (looping over the weights), and then trying a vectorized implementation in Numpy. We talk about the calculus of Stochastic Gradient Descent, and prepare for a logistic regression implementation in the next tutorial.
 
 ## Other Work:
 
