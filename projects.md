@@ -16,6 +16,6 @@ permalink: /projects/
 
 * <a href="">**Simple MNIST Classifier:**</a> This notebook is a simple tutorial introduction to image classification in Tensorflow/
 
-* <a href="https://github.com/ja3067/gradient-descent">**Logistic/Linear Regression in Numpy:**</a> These scripts use backpropogation to perform linear and logistic regression, with an algorithm implemented from scratch in Numpy/Python.
+* <a href="https://github.com/ja3067/gradient-descent-examples">**Logistic/Linear Regression in Numpy:**</a> These scripts use backpropogation to perform linear and logistic regression, with an algorithm implemented from scratch in Numpy/Python.
 
 Other side-projects include various <a href="https://github.com/ja3067/examples/blob/master/preprocessing.py">sanitization utilities</a> for images and text, and some curiosities like a <a href="https://github.com/ja3067/examples/blob/master/mandelbrot.py">Mandelbrot generator</a> and some scientific visualization datasets.
