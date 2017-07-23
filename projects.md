@@ -17,7 +17,7 @@ permalink: /projects/
 
 * <a href="https://github.com/ja3067/gradient-descent-examples">**Logistic/Linear Regression in Numpy:**</a> These scripts use backpropogation to perform linear and logistic regression, with an algorithm implemented from scratch in Numpy/Python.
 
-Other side-projects include various <a href="https://github.com/ja3067/examples/blob/master/preprocessing.py">sanitization utilities</a> for images and text, and some curiosities like a <a href="https://github.com/ja3067/examples/blob/master/mandelbrot.py">Mandelbrot generator</a> and some scientific visualization datasets.
+Other side-projects include <a href="https://github.com/ja3067/demos/blob/master/python-notes.ipynb">general python notes</a> and <a href="https://github.com/ja3067/demos/blob/master/python-notes-modules.ipynb">module tutorials</a>, and various scientific visualization tools. More small scripts and utilities will be added gradually.
 
 ## Tensorflow/Keras Tutorials
 
@@ -25,3 +25,10 @@ Other side-projects include various <a href="https://github.com/ja3067/examples/
 
 * <a href="https://github.com/ja3067/tensorflow-keras-tutorials/blob/master/SGD%20Linear%20Regression%20in%20Numpy%20Tutorial.ipynb">**Introduction to SGD, Vectorization, and Linear Regression in Numpy:**</a> In this tutorial, we implement the "backpropogation" algorithm for simple linear regression on MNIST, first by looping over the weights, and then using a vectorized implementation in Numpy. We talk about the calculus of Stochastic Gradient Descent, and prepare for a logistic regression implementation in the next tutorial. For anyone interesting in actually doing Machine Learning by hand, without a framework, or in understanding what Tensorflow is actually doing, this should be helpful.
 
+## Other Work:
+
+* <a href="https://github.com/ja3067/examples/blob/master/preprocessing.py">**Image Preprocessing Script:**</a> A script which preprocesses image data and saves it in convenient formats, with a large number of options including resizing, greyscale convertion, and channel normalization.
+
+* <a href="https://github.com/ja3067/demos/blob/master/mandelbrot.py">**Mandelbrot Generator:**</a> A small Mandelbrot generator, with arbitrary resolution and size.
+
+* <a href="https://github.com/ja3067/demos/blob/master/central_limit.py">**Central Limit Theorem Demonstration:**</a> A small script which demonstrates the converge of the mean of samples from arbitrary distributions to a normal distribution.
