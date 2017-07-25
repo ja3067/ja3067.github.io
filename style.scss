@@ -25,13 +25,13 @@ body {
 
 .container {
   margin: 0 auto;
-  max-width: 1024px;
+  max-width: 800px;
   padding: 0 10px;
   width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $helveticaNeue;
+  font-family: Helvetica, $helveticaNeue;
   color: $darkerGray;
   font-weight: bold;
 
@@ -52,7 +52,9 @@ h1 {
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 32px;
+  letter-spacing: -1.25px;
+  font-weight: 300;
 }
 
 h3 {
@@ -120,8 +122,9 @@ img {
 }
 
 .date {
-  font-style: italic;
-  color: $gray;
+  color: #818181;
+  font-size: 15px;
+  margin-top: 5px;
 }
 
 // Specify the color of the selection
@@ -258,7 +261,7 @@ nav {
 .post {
   blockquote {
     margin: 1.8em .8em;
-    border-left: 2px solid $gray;
+    border-left: 1.5px solid $gray;
     padding: 0.1em 1em;
     color: $gray;
     font-size: 22px;
@@ -287,6 +290,69 @@ footer {
   text-align: center;
 }
 
+// Custom styles
+
+.post-header {
+    font-size: 36px;
+    line-height: 1;
+    font-weight: 300;
+    letter-spacing: -1.5px;
+    margin: 0;
+    padding: 0;
+}
+
+.excerpt {
+  margin-top: 20px;
+  margin-bottom: 5px;
+
+}
+
+.post p {
+  margin: 15px 0;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+}
+
+.post h1 {
+  font-size: 32px;
+  letter-spacing: -1.25px;
+  font-weight: 300;
+  font-size: 30px;
+  margin-top: 0px;
+  a {
+    color: inherit;
+  }
+}
+
+.post h2 {
+  font-size: 32px;
+  letter-spacing: -1.25px;
+  font-weight: 300;
+}
+
+.post .quote {
+  font-family: Courier New;
+  line-height: 25px;
+  display: inline-block;
+  padding-left: 20px;
+  margin-left: 10px;
+  border-left: 1.5px solid #666;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.post .date {
+  color: #818181;
+  font-size: 15px;
+  font-weight: 300;
+
+}
+
+.post blockquote {
+  margin: 1em .4em;
+  font-style:normal;
+}
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
