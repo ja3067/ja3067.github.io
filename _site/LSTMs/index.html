@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Effective RNNs: A Guide to Recurrent Neural Networks with examples in Tensorflow – Jacob Austin – Machine learning, made simple.</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="" />
+    <meta property="og:description" content="" />
+    
+    <meta name="author" content="Jacob Austin" />
+    <meta name="keywords" content="Jacob Austin, jaustin, ja3067, Jacob, Austin, Columbia, Columbia University, physics, math, CS, machine learning, Tensorflow, tf, keras, music, piano, Waynflete, github, computer science, LSTM, RNN, CNN, tutorial, plasma physics, plasma, computer vision, NLP, blog">
+    
+    <meta property="og:title" content="Effective RNNs: A Guide to Recurrent Neural Networks with examples in Tensorflow" />
+    <meta property="twitter:title" content="Effective RNNs: A Guide to Recurrent Neural Networks with examples in Tensorflow" />
+    
+
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Jacob Austin - Machine learning, made simple." href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars0.githubusercontent.com/u/28993550" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Jacob Austin</a></h1>
+            <p class="site-description">Machine learning, made simple.</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+            <a href="https://github.com/ja3067">Github</a>
+            <a href="/projects">Projects</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+
+
+<article class="post">
+  <h1 class="post-header">Effective RNNs: A Guide to Recurrent Neural Networks with examples in Tensorflow</h1>
+  <div class="date">
+    July 22, 2017
+  </div>
+
+  <div class="entry">
+    <p>Computers have always been notorious incompetent at text generation and comprehension. Anyone who’s ever had a bad experience with autocorrect or “Google Translated” something into their native language will probably tell you that computers can’t write worth a damn. They can fix spelling and look up words in a dictionary, but they struggle to make sense of the sequential, contextual structure of language. So you can imagine my surprise when I sat down at my computer the other morning and found these lines written by a Recurrent Neural Network, or RNN, that I had thrown together the previous evening and left running overnight on my laptop CPU.</p>
+
+<div class="quote">
+CAPULET:<br />
+Come, come in, we will tell thee, as reason<br />
+To the stately royaltys but little looks,<br />
+Where did he stoop and notice thee.<br />
+<br />
+LUSLIS:<br />
+To my way, in the thing I did make the contents<br />
+That thyself that dissolvath you.<br />
+<br />
+ROMEO:<br />
+Undowses, but he shall resolve to be so.<br />
+<br />
+BUCKINGHAM:<br />
+That we will find me Henry, his men.<br />
+<br />
+First Musician:<br />
+Sir, here’s a pretty thing, our soldiers’ wounds<br />
+are from the infants murderd weeping for<br />
+thy carelessness.<br />
+</div>
+
+<p>Okay, sure, it’s not really Shakespeare, but I’d forgive someone for mistaking it for an obscure quote from one of his later plays. And it wasn’t just that quote that struck me, but page after page of faux-Shakespeare from my hastily written network. Andrej Karpathy’s famous essay on the subject, <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">The Unreasonable Effectiveness of Recurrent Neural Networks</a>, is aptly named: <em>RNNs are uncanny, strange, unpredictable, and sometimes beautiful</em>. In this tutorial, I’d like to go through the basics of RNNs and LSTMs, provide some tips for implementing and training them, and talk about recent developments in the field. You can find the char-rnn responsible for this passage, and many more pages from this and other datasets in my <a href="https://github.com/ja3067/char-rnn-tensorflow">Github LSTM repository</a>.</p>
+
+<h2 id="what-is-an-rnn">What is an RNN?</h2>
+
+<p>RNNs, or Recurrent Neural Networks, are networks capable of sequential learning. More specifically, they are networks that take a directed sequence of inputs, and return an output or set of outputs that reflect the sequential, often temporal nature of the inputs. While this may seem restrictive, something you quickly discover is that <strong>just about anything can be a sequence</strong>. It’s easy to see that words and sentences are sequential, but RNNs can also be used for everything from image generation to music composition to object classification. Humans are amazing at learning because we learn in context; we can remember and contextualize a word in a sentence that last appeared pages ago. We can even use knowledge acquired from one task to improve our performance on another, mostly unrelated one. <em>Our neural networks should be able to do the same thing.</em></p>
+
+<p>A typical RNN architecture will look something like this:</p>
+
+<p><br /><img src="/images/RNN-drawing1.png" style="width: 90%; display: block; margin: 0 auto;" /><br /></p>
+
+<p>This may look complicated, but it’s actually pretty simple. The RNN is just a single cell (the green block labeled A) with an input (x), an output (h), and a state vector (s), which is updated every time a new input is processed. During training, a sequence of elements is fed one by one into the RNN, and the state vector is continually updated, acting as a sort of record of the past elements in the sequence. Since the weights inside the neuron “body” control both how it interprets and generates the state vector, it can learn via backpropogation how to more accurately and succinctly summarizing and remember important information about previous inputs.</p>
+
+<p>The implementation of such a model is also quite simple. Each input is encoded as a vector, either one-hot encoded or placed into an “embedding space” by a network that learns during training to assign more and more representative vectors to each input. The state and input vectors are supplied to linear layers (multiplied by a matrix $w$ and shifted by a bias $b$), and then, in the most common formulation, they are added to one another and normalized with a tanh activation.</p>
+
+<script type="math/tex; mode=display">s_t = \tanh(w_i\cdot i_t + b_i + w_s\cdot s_{t-1} + b_s)</script>
+
+<p>This is as far as the state vector goes, but we need to add one more linear layer to decode the output, since generally the vectors will be longer than the input length while inside the RNN cell (we refer to the size of the input space as the <em>input size</em> and the size of the RNN state space as the <em>RNN size</em> or <em>number of hidden nodes</em>). This matrix $w_o$ will have shape <code class="highlighter-rouge">(input_size, rnn_size)</code>.</p>
+
+<script type="math/tex; mode=display">h_t = w_o\cdot s_t + b_o</script>
+
+<p>Our loss function is just an $L^2$ or cross-entropy loss function measuring the distance between the output sequence and the desired results. The beautiful thing about RNNs is that the labels are actually just the input sequence shift right by one time-step, so the network learns to produce the next word in a sequence given prior elements. Backpropogation is not difficult, although the gradient associated with outputs later in the sequence will be quite long, since they depend on every input layer before them.</p>
+
+<h2 id="implementation-in-tensorflow">Implementation in Tensorflow</h2>
+
+<p>The LSTM cell is just a set of three matrices <code class="highlighter-rouge">wi</code>, <code class="highlighter-rouge">ws</code>, and <code class="highlighter-rouge">wo</code> with biases, applied to the inputs, state vector, and outputs, respectively. A Tensorflow pseudo-code implementation looks like this:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">RNN_cell</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+
+  <span class="n">wi</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"wi"</span><span class="p">,</span> <span class="p">[</span><span class="n">input_size</span><span class="p">,</span> <span class="n">rnn_size</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=...</span><span class="p">)</span> <span class="c"># weight and bias for input</span>
+  <span class="n">bi</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"bi"</span><span class="p">,</span> <span class="p">[</span><span class="n">rnn_size</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=...</span><span class="p">)</span>
+
+  <span class="n">ws</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"ws"</span><span class="p">,</span> <span class="p">[</span><span class="n">rnn_size</span><span class="p">,</span> <span class="n">rnn_size</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=...</span><span class="p">)</span> <span class="c"># weight and bias for state vector</span>
+  <span class="n">bs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"bs"</span><span class="p">,</span> <span class="p">[</span><span class="n">rnn_size</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=...</span><span class="p">)</span>
+
+  <span class="n">wo</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"wo"</span><span class="p">,</span> <span class="p">[</span><span class="n">rnn_size</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=...</span><span class="p">)</span> <span class="c"># weight and bias for decoding RNN output</span>
+  <span class="n">bo</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"bo"</span><span class="p">,</span> <span class="p">[</span><span class="n">vocab_size</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=...</span><span class="p">)</span>
+
+  <span class="n">state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">xw_plus_b</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">wi</span><span class="p">,</span> <span class="n">bi</span><span class="p">)</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">xw_plus_b</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">ws</span><span class="p">,</span> <span class="n">bs</span><span class="p">))</span>
+  <span class="n">output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">xw_plus_b</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">wo</span><span class="p">,</span> <span class="n">bo</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">state</span><span class="p">,</span> <span class="n">output</span>
+</code></pre>
+</div>
+<p>Easy-peasy. RNNs can also be stacked on top of each other, so the output sequence is used as the input sequence for another RNN. Since I had a hard time implementing this, I’ll add a diagram of the two layer RNN model:</p>
+
+<p><img src="/images/two-layer-color.png" /></p>
+
+<p>This adds an arbitrary amount of depth to the model, and makes the RNN rather more reminiscent of human memory, where memory is handled by many different neurons with different functions. We can also add activations or even entire new layers between the layers of the RNN. Since we usually want our network to predict subsequent elements in our input sequence, we train our network to produce outputs equal to the next input, i.e. to make $h_0$ equal to $x_1$, $h_1$ equal to $x_2$, etc. That elegance is what makes RNNs so powerful and easy to use - we don’t need any training data beyond the actual text of the dataset.
+In Tensorflow, the labels and input data looks like this:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">train_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span> <span class="c"># here we take a sequence of characters from the training data and store them in a list</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sequence_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+  <span class="n">train_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">vocabulary_size</span><span class="p">]))</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[:</span><span class="n">sequence_length</span><span class="p">]</span>
+<span class="n">train_labels</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</code></pre>
+</div>
+
+<p>If our training data is a long block of text, we select sequences of length <code class="highlighter-rouge">sequence_length</code> at random from the text to limit the length of the backpropogation graph. If we tried backpropogating over the entire corpus, the graph would grow exponentially, and gradients for distant inputs would quickly vanish. Next we create an initial state variable, and repeatedly apply the RNN_cell to our inputs, modifying the state variable each time. At the end, we convert our output list into a tensor, and apply a standard loss function.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">rnn_size</span><span class="p">])</span> <span class="c"># initial state variable</span>
+
+<span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># list for storing outputs</span>
+
+<span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+  <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s">"RNN"</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
+    <span class="n">state</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="n">RNN_cell</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+    <span class="n">scope</span><span class="o">.</span><span class="n">reuse_variables</span><span class="p">()</span>
+    <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+<span class="n">logits</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span> <span class="c"># convert list into tensor</span>
+
+<span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax_cross_entropy_with_logits</span><span class="p">(</span>
+                            <span class="n">labels</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">train_labels</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">)</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span>
+
+</code></pre>
+</div>
+
+<p>The model is then trained on a standard SGD optimizer (classical SGD, or Adam/RMSProp/others).</p>
+
+<h2 id="lstms-whats-the-big-deal">LSTMs: What’s the Big Deal?</h2>
+
+<p>We have a working model right now, but it has some major drawbacks. For one thing, it’s very shallow, and these normalized linear layers aren’t capable of capturing much complexity in the state space. For another things, the addition of a single state vector is a very crude way of handling memory, since information about older elements is lost as the network optimizes for <em>relatively</em> more important shorter-term memory. These problems are rectified by the LSTM (Long Short-Term Memory) model.</p>
+
+<p>An LSTM is an RNN unit with a clever mechanism for learning what to remember and what to forget. To do this, we add aptly-named forget and memory gates, which control how the state vector is interpreted and modified inside the LSTM.</p>
+
+<p><br /><img src="/images/LSTM.png" style="width: 90%; display: block; margin: 0 auto;" /><br /></p>
+
+<p>The yellow squares, in order from left to right, are the forget, input, memory, and output gates, and they each have a specific function. The first gate is the <strong>forget gate</strong>, which controls what information in the state vector is allowed back into the LSTM cell. The previous output $o_{i-1}$ is fed back into the cell, concatenated with the new input $x_i$, and fed through a linear layer with a sigmoid activation.</p>
+
+<p><img src="/images/LSTMforgetmath.png" style="width: 80%; display: block; margin: 0 auto;" /></p>
+
+<p>The sigmoid activation normalizes the output of the layer to between zero and one, so when the new vector is multiplied elementwise by the state vector, each element is re-prioritized; parts of the vector can be left virtually untouched, while others are totally erased. This gate allows the cell to forget features of the previous inputs which it doesn’t care very much about, and keep features it thinks are important, by rescaling the corresponding element of the state vector.</p>
+
+<p>The second gate is the <strong>input gate</strong>, and it is also a sigmoid layer, but unlike the forget gate, it controls how much the state vector is actually updated by the new input and previous outputs. Instead of multiplying the state vector, it multiplies the output of the next gate, the <strong>memory gate</strong>, which rescales and normalizes the concatenated input and output vector, before they are added elementwise to the state vector.</p>
+
+<p><img src="/images/LSTMinputmemorymath.png" style="width: 80%; display: block; margin: 0 auto;" /></p>
+
+<p>This pair of gates controls long-term learning. If a particular input is an outlier, these two gates can effectively ignore it. And even if an input isn’t relevant right now, it can pass through these gates and modify the state vector, without changing <em>this</em> output. These gates are what makes LSTMs great at making long-term associations. From here, the state vector is sent out of the cell and reenters to repeat the process all over again. However, we aren’t quite done yet.</p>
+
+<p>In the last step, the concatenated input and prior output are transformed by the final <strong>output layer</strong>, normalized by a sigmoid activation, and multiplied elementwise by the state vector, which itself has been normalized by a tanh activation.</p>
+
+<p><img src="/images/LSTMoutput.png" style="width: 80%; display: block; margin: 0 auto;" /></p>
+
+<p>This final gate again allows the cell to ignore aspects of the previous sequence which may be relevant for future entries, but aren’t relevant to this output. At last, we are done, and one final linear layer outside the cell can decode the output and get us our actual result, whether it’s a word, a letter, or an array of pixels.</p>
+
+<h2 id="lstm-implementation-in-tensorflow">LSTM implementation in Tensorflow</h2>
+
+<p>The LSTM body method looks very similar to the simple RNN, with the addition of two new layers. I’ve removed the decoding output layer that I included in the RNN method for the sake of reusability.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lstm_cell</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="c"># Input gate: input, previous output, and bias.</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"x"</span><span class="p">,</span> <span class="p">[</span><span class="n">vocabulary_size</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">num_nodes</span><span class="p">],</span>
+                         <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">truncated_normal_initializer</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"m"</span><span class="p">,</span> <span class="p">[</span><span class="n">num_nodes</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">num_nodes</span><span class="p">],</span>
+                         <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">truncated_normal_initializer</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+
+    <span class="n">ib</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"ib"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_nodes</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+    <span class="n">fb</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"fb"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_nodes</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+    <span class="n">cb</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"cb"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_nodes</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+    <span class="n">ob</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"ob"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_nodes</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+
+    <span class="n">xtemp</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">mtemp</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+
+    <span class="n">ix</span><span class="p">,</span> <span class="n">fx</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">ox</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">xtemp</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">im</span><span class="p">,</span> <span class="n">fm</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">om</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">mtemp</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">input_gate</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">ix</span> <span class="o">+</span> <span class="n">im</span> <span class="o">+</span> <span class="n">ib</span><span class="p">)</span>
+    <span class="n">forget_gate</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">fx</span> <span class="o">+</span> <span class="n">fm</span> <span class="o">+</span> <span class="n">fb</span><span class="p">)</span>
+    <span class="n">update</span> <span class="o">=</span> <span class="n">cx</span> <span class="o">+</span> <span class="n">cm</span> <span class="o">+</span> <span class="n">cb</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">forget_gate</span> <span class="o">*</span> <span class="n">state</span> <span class="o">+</span> <span class="n">input_gate</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
+    <span class="n">output_gate</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">ox</span> <span class="o">+</span> <span class="n">om</span> <span class="o">+</span> <span class="n">ob</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">output_gate</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">state</span><span class="p">),</span> <span class="n">state</span>
+</code></pre>
+</div>
+
+<p>We use matrices x and m of size <code class="highlighter-rouge">vocabulary_size x 4 * num_nodes</code> to avoid 4 separate matrix multiplications. Instead, we can just multiply the input once by a matrix four times as large, and then split the output for use in the appropriate gates. When it actually comes to implementing a multilayer LSTM, the implementation gets a little hairier, because the state vector needs to be saved between layers. First of all, for each layer, we need weight and bias variables to serve as an intermediate layers. I choose to save some effort and make these weights have an output dim equal to the vocabulary size, but this is not necessary. We repeatedly call the <code class="highlighter-rouge">lstm_cell</code>, but we need to explicitly allow reused variables, so Tensorflow knows that we really want to “get” the same variable. After each loop, we assign the outputs of each layer to <code class="highlighter-rouge">saved_output</code> and saved_state` variables, which are used as the initial output and state variables the next time the loop is run.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_layers</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s">'layer{}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">))</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"w"</span><span class="p">,</span> <span class="p">[</span><span class="n">num_nodes</span><span class="p">,</span> <span class="n">vocabulary_size</span><span class="p">],</span>
+                            <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">truncated_normal_initializer</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="p">[</span><span class="n">vocabulary_size</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+
+        <span class="n">saved_output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"saved_output"</span><span class="p">,</span> <span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_nodes</span><span class="p">],</span>
+                                       <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">trainable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">saved_state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"saved_state"</span><span class="p">,</span> <span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_nodes</span><span class="p">],</span>
+                                      <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">trainable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">saved_output</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">saved_state</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+            <span class="n">output</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">lstm_cell</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+            <span class="n">scope</span><span class="o">.</span><span class="n">reuse_variables</span><span class="p">()</span>
+            <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+        <span class="c"># State saving across unrollings.</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">control_dependencies</span><span class="p">([</span><span class="n">saved_output</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">output</span><span class="p">),</span> <span class="n">saved_state</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">state</span><span class="p">)]):</span>
+            <span class="c"># Classifier.</span>
+            <span class="n">logits</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">xw_plus_b</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">num_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">_logits</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="p">[</span><span class="n">num_unrollings</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">vocabulary_size</span><span class="p">])</span>
+                <span class="n">inputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">_logits</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">num_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax_cross_entropy_with_logits</span><span class="p">(</span>
+                        <span class="n">labels</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">train_labels</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p>In order to compute the loss, we multiply the last output of the uppermost layer by a weight and bias, and then apply a cross entropy loss function. We perform some clever concatenation and reshaping here to handle training in batches.</p>
+
+<h2 id="training-lstms">Training LSTMs</h2>
+
+<p>LSTMs are sometimes thought to be difficult to train, but in truth that tends not to be the case. They can be slow to train, but they don’t have the unfortunate tendency of diverging wildly when the learning rate is even a little too high, like many CNNs and GANs. The key in my experience to rapid, efficient training is a shallow network (2 layers, 128 hidden layers, .002 learning rate on Adam or RMSProp). This will achieve very respectable results very rapidly, but will saturate at a certain point (around 30000 iterations in my experience). Better results come with a serious performance cost: going up to 3 layers immediately slows training by several orders of magnitude, and increasing the number of hidden units to 512 or 1024 increases the number of parameters by a factor of 16 and 32 respectively, compared to the 128 units network. However, achieving anything more than a superficial resemblance to a dataset requires a large number of hidden units and multiple layers, so it’s often worth the time.</p>
+
+<h2 id="recent-developments">Recent developments</h2>
+
+<p>LSTMs have been around for a while, but they’re still an extremely active field of research. Several variants of the LSTM have been popularized over the years, including LSTMs with peepholes, which are learned connections between the various gates, and GRUs, developed by <a href="https://arxiv.org/pdf/1406.1078v3.pdf">Cho, et al. (2014)</a>, which scrap the independent forget gate and use the input gate for both purposes instead. This makes them much faster to train, and seems to have very little adverse effect on network efficacy. LSTMs are also being used more and more in other machine learning tasks, like image recognition, labeling, and generation. Li Fei-Fei and Andrej Karpathy <a href="https://cs.stanford.edu/people/karpathy/cvpr2015.pdf">used LSTMs</a>. to caption images in context, localizing objects with a convolution network, and then inserting those region classifications into an LSTM which produced contextual labels.</p>
+
+<p><img src="/images/Karpathy-labeling.png" style="display: block; margin: 0 auto; width: 50%" /></p>
+
+<p>The 2015 Gregor et al. paper <a href="https://arxiv.org/pdf/1502.04623.pdf">DRAW: A Recurrent Neural Network For Image Generation</a> used RNNs to generate images, like handwritten letters from MNIST, sequentially, focusing the generative network’s attention on a single small region of the image at a time, much like humans do when drawing numbers or pictures.</p>
+
+<p><img src="/images/Gregor-images.png" style="display: block; margin: 0 auto; width: 50%" /></p>
+
+<p>Pretty cool!</p>
+
+<h2 id="visualization">Visualization</h2>
+
+<p>Like in convolution networks, the ability of such neural networks to summarize and perform “unsupervised learning” is quite extraordinary, and visualizing the activations of a fully trained LSTM can be linguistically fascinating. These visualizations can be performed using Tensorflow’s Tensorboard suite, and can identify “trigger words” or phrases, sequences of characters which strongly encourage the network to produce a certain output. These can be common phrases, interjections, or even words which fit within the meter of the passage. Karpathy’s essay is an excellent resource for more information on this subject.</p>
+
+<p>All in all, LSTMs are an exciting, powerful, and sometimes beautiful tool for sequential learning that can be easily and conveniently implemented in Tensorflow or Keras. I hope this was helpful, and feel free to ask any questions in the comments.</p>
+
+  </div>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:ja3067@columbia.edu"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/ja3067"><i class="svg-icon github"></i></a>
+
+<a href="https://www.linkedin.com/in/jacob-austin-b52191133/"><i class="svg-icon linkedin"></i></a>
+
+
+
+<a href="http://stackoverflow.com/users/5187645/jaustin"><i class="svg-icon stackoverflow"></i></a>
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-103049335-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '/LSTMs/',
+		  'title': 'Effective RNNs: A Guide to Recurrent Neural Networks with examples in Tensorflow'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>
