@@ -6,11 +6,15 @@
     {% if page.excerpt %}
     <meta name="description" content="{{ page.excerpt| strip_html }}" />
     <meta property="og:description" content="{{ page.excerpt| strip_html }}" />
-    <meta property="og:image" content="{{ page.excerpt| strip_html }}" />
     {% else %}
     <meta name="description" content="{{ site.description }}">
     <meta property="og:description" content="{{ site.description }}" />
     {% endif %}
+
+    {% if page.thumbnail %}
+    <meta property="og:image" content="{{ page.thumbnail }}" />
+    {% endif %}
+
     <meta name="author" content="{{ site.name }}" />
     <meta name="keywords" content="Jacob Austin, jaustin, ja3067, Jacob, Austin, Columbia, Columbia University, physics, math, CS, machine learning, Tensorflow, tf, keras, music, piano, Waynflete, github, computer science, LSTM, RNN, CNN, tutorial, plasma physics, plasma, computer vision, NLP, blog">
     {% if page.title %}
