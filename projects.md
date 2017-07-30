@@ -4,12 +4,16 @@ title: Projects
 permalink: /projects/
 ---
 
-*Disclaimer:* I will try to keep this list updated, but please check my github for my latest projects. 
+*Disclaimer:* I will try to keep this list updated, but please check my github for my latest projects.
 
 
 ## Networks:
 
 * <a href="https://github.com/ja3067/char-rnn-tensorflow">**Char-RNN:**</a> My latest project is a general-purpose character-level Long Short-Term Memory (LSTM) RNN for learning from and interpreting text, which can be trained on any large text dataset with good performance and excellent results.
+
+* <a href="https://github.com/ja3067/tic-tac-toe-minimax">**Tic Tac Toe:**</a> In this repository, I implement a number of reinforcement learning and minimax algorithms for playing tic-tac-toe, including Q-learning, alpha-beta pruning, heuristic evaluation functions, and the classical minimax algorithm.
+
+* <a href="https://github.com/ja3067/gradient-descent-examples">**Reinforcement Learning:**</a> These scripts demonstrate solutions to some classic reinforcement learning problems, and solve optimal control problems for OpenAI challenges. The k-armed-bandit script compares and visualizes algorithms for solving the classic problem in reinforcement learning.
 
 * <a href="">**Generative Adversarial Networks (GANs):**</a> These networks, trained on MNIST, CIFAR-10, and several face datasets, are capable of learning to produce unique image data from existing datasets. They work by pitting two neural networks against each other: one, a classifier, tries to tell which image is real and which is fake, while the other tries to generate more realistic images.
 
@@ -27,7 +31,7 @@ Other side-projects include <a href="https://github.com/ja3067/demos/blob/master
 
 ## Other Work:
 
-* <a href="https://github.com/ja3067/examples/blob/master/preprocessing.py">**Image Preprocessing Script:**</a> A script which preprocesses image data and saves it in convenient formats, with a large number of options including resizing, greyscale convertion, and channel normalization.
+* <a href="https://github.com/ja3067/examples/blob/master/preprocessing.py">**Image Preprocessing Script:**</a> A script which preprocesses image data and saves it in convenient formats, with a large number of options including resizing, greyscale conversion, and channel normalization.
 
 * <a href="https://github.com/ja3067/demos/blob/master/mandelbrot.py">**Mandelbrot Generator:**</a> A small Mandelbrot generator, with arbitrary resolution and size.
 
