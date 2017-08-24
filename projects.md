@@ -13,7 +13,7 @@ permalink: /projects/
 
 * <a href="https://github.com/ja3067/tic-tac-toe-minimax">**Tic Tac Toe:**</a> In this repository, I implement a number of reinforcement learning and minimax algorithms for playing tic-tac-toe, including Q-learning, alpha-beta pruning, heuristic evaluation functions, and the classical minimax algorithm.
 
-* <a href="https://github.com/ja3067/gradient-descent-examples">**Reinforcement Learning:**</a> These scripts demonstrate solutions to some classic reinforcement learning problems, and solve optimal control problems for OpenAI challenges. The k-armed-bandit script compares and visualizes algorithms for solving the classic problem in reinforcement learning.
+* <a href="https://github.com/ja3067/reinforcement-learning">**Reinforcement Learning:**</a> These scripts demonstrate solutions to some classic reinforcement learning problems, and solve optimal control problems for OpenAI challenges. The k-armed-bandit script compares and visualizes algorithms for solving the classic problem in reinforcement learning.
 
 * <a href="">**Generative Adversarial Networks (GANs):**</a> These networks, trained on MNIST, CIFAR-10, and several face datasets, are capable of learning to produce unique image data from existing datasets. They work by pitting two neural networks against each other: one, a classifier, tries to tell which image is real and which is fake, while the other tries to generate more realistic images.
 
