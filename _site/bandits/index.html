@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>404 - Page not found – Jacob Austin – Machine learning, made simple.</title>
+    <title>K-Armed Bandits: Understanding Reinforcement Learning – Jacob Austin – Machine learning, made simple.</title>
 
         <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -9,17 +9,19 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
 
     
-    <meta name="description" content="Machine learning, made simple.">
-    <meta property="og:description" content="Machine learning, made simple." />
+    <meta name="description" content="" />
+    <meta property="og:description" content="" />
     
 
+    
+    <meta property="og:image" content="https://ja3067.github.io/images/placeholder.png" />
     
 
     <meta name="author" content="Jacob Austin" />
     <meta name="keywords" content="Jacob Austin, jaustin, ja3067, Jacob, Austin, Columbia, Columbia University, physics, math, CS, machine learning, Tensorflow, tf, keras, music, piano, Waynflete, github, computer science, LSTM, RNN, CNN, tutorial, plasma physics, plasma, computer vision, NLP, blog">
     
-    <meta property="og:title" content="404 - Page not found" />
-    <meta property="twitter:title" content="404 - Page not found" />
+    <meta property="og:title" content="K-Armed Bandits: Understanding Reinforcement Learning" />
+    <meta property="twitter:title" content="K-Armed Bandits: Understanding Reinforcement Learning" />
     
 
 
@@ -55,16 +57,36 @@
     </div>
 
     <div id="main" role="main" class="container">
-      <article class="page">
+      
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true
+    }
+  });
+</script>
 
-  <h1>404 - Page not found</h1>
+
+
+<article class="post">
+  <h1 class="post-header">K-Armed Bandits: Understanding Reinforcement Learning</h1>
+  <div class="date">
+    July 30, 2017
+  </div>
 
   <div class="entry">
-    <p>Sorry, we can’t find that page that you’re looking for. You can try again by going <a href="/">back to the homepage</a>.</p>
+    <p>The k-armed bandits problem. If you’ve read anything about reinforcement learning, the term has probably come up, but even after a lot of technical reading, it still evokes the image of a group of seven-armed men waylaying travelers in a deserted street. The actual problem is rather more pedestrian, but not less interesting. The k-armed bandits problem is a classic problem is statistics and reinforcement learning that asks the following:</p>
 
-<p><a href="/"><img src="/images/404.jpg" alt="Constructocat by https://github.com/jasoncostello" style="width: 400px;" /></a></p>
+<div class="quote">A man is playing a number of slot machines at the same time, each of which has a fixed distribution of possible rewards. For simplicity, we assume the distributions are normal with fixed, but different, means and deviations. The man can pull a total of 1000 levers, and he starts off knowing nothing about the distributions. What strategy should he employ to earn the most money in those 1000 episodes?</div>
+
+<p>We can start by brainstorming some possible strategies. One strategy is to pull a bunch of levers at random until we have a pretty good idea which is the best one on average, and then pull that one repeatedly. Another is to always pull the best one, except for a small percentage of the time when you pull another randomly chosen lever. A third, more elaborate possibility is to keep track of how much we really know about each distribution, and pull them less often at random if we’re more certain about its reward distribution. These all seem like reasonable strategies, but they all have downsides.</p>
 
   </div>
+
+  
 </article>
 
     </div>
@@ -99,8 +121,8 @@
 
 		ga('create', 'UA-103049335-1', 'auto');
 		ga('send', 'pageview', {
-		  'page': '/404/',
-		  'title': '404 - Page not found'
+		  'page': '/bandits/',
+		  'title': 'K-Armed Bandits: Understanding Reinforcement Learning'
 		});
 	</script>
 	<!-- End Google Analytics -->
