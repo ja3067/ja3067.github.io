@@ -39,4 +39,4 @@ There are few things more exciting or potentially revolutionary than machine lea
 
 ### Contact me
 
-[ja3067@columbia.com](mailto:ja3067@columbia.edu.com)
+[jacob.austin@columbia.edu](mailto:jacob.austin@columbia.edu)
