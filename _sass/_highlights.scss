@@ -1,4 +1,3 @@
-
 .highlight {
   background-color: #fff;
   padding: 7px 7px 7px 10px;
@@ -7,12 +6,12 @@
   overflow: scroll;
 }
 
-code {
-  font-family:'Bitstream Vera Sans Mono','Courier', monospace;
-}
-
 pre.highlight {
     border: none;
+}
+
+code {
+  font-family:'Bitstream Vera Sans Mono','Courier', monospace;
 }
 
 .highlight .c { color: #586E75 } /* Comment */
