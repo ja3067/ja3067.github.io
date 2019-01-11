@@ -6,6 +6,11 @@ permalink: /projects/
 
 *Disclaimer:* I will try to keep this list updated, but please check my github for my latest projects.
 
+## General:
+
+* <a href="https://github.com/ja3067/Coral">**Coral Programming Language**</a> The Coral programming language is a blazingly-fast, gradually typed Python-like language with powerful optional typing for improved safety and performance. Coral performs type inference on optionally typed Python code and seamlessly optimizes type-inferred objects to be nearly as efficient as equivalent C-code, orders of magnitude faster than Python. Coral also enforces types at compile and runtime, catching errors where possible before code is run, and otherwise throwing errors at runtime.
+
+* <a href="https://github.com/ja3067/Titan">**Titan Simulation Library**</a> The Titan simulation library is a versitile CUDA-based physics simulation library that provides a GPU-accelerated environment for physics primatives like springs and masses. Library users can create masses, springs, and more complicated objects, apply constraints, and modify simulation parameters in real time, while the simulation runs asynchronously on the GPU.
 
 ## Networks:
 
