@@ -2,7 +2,7 @@
 layout: post
 title: "Introducing the Coral Programming Language: A Fast Gradually Typed Python-Like Language with Type Checking"
 use_math: false
-excerpt: <div class="excerpt">Python is a wonderful language to use, but it has two major faults. it's slow, and it can be too permissive sometimes with what kinds of programs it runs. This year, we've written the Coral Programming Language, a gradually typed Python variant that takes the optional type annotations introduced in Python 3.7 and uses them to perform type inferrence, type-checking, and optimization of Python code. This allows Coral to compile Python to binaries that can be orders of magnitude faster than Python, while catching many type errors at compile-time.<br></div>
+excerpt: <div class="excerpt">Python is a wonderful language to use, but it has a few major faults. It's slow, and it will allow you to run almost any syntactically valid program, even if you just passed a string to that gcd function. This year, we've written the Coral Programming Language, a gradually typed Python variant that takes the optional type annotations introduced in Python 3.7 and uses them to perform type inferrence, type-checking, and optimization of Python code. This allows Coral to compile Python to binaries that can be orders of magnitude faster than Python, while catching many type errors at compile-time.<br></div>
 thumbnail: "https://ja3067.github.io/images/thumbnail.png"
 ---
 
