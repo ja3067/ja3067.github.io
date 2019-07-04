@@ -6,7 +6,7 @@ excerpt: <div class="excerpt"><img src="/images/wordcloud2.png"></div>
 thumbnail: "https://ja3067.github.io/images/thumbnail.png"
 ---
 
-<img src="/images/wordcloud.png">
+<img src="/images/wordcloud2.png">
 
 _This is Part 2 of a series on the Python C API and CUDA/Numpy integration. Part 1 can be found [here](https://ja3067.github.io/cython/). A full Github repository containing all this code can be found [here](https://github.com/ja3067/Python-C-API-CUDA-Tutorial)._
 
