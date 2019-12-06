@@ -4,13 +4,17 @@ title: About
 permalink: /about/
 ---
 
-I'm a third year undergraduate in computer science, math, and physics at Columbia University. I'm a researcher at the Columbia Data Science Institute, a teaching assistant in the Columbia Math and CS departments, and a classical musician with the Columbia Music Performance Program.
+I'm a fourth year undergraduate in computer science and mathematics at Columbia University. I'm a researcher at the Columbia Data Science Institute, a teaching assistant in the Columbia Math and CS departments, and a classical musician with the Columbia Music Performance Program. This past summer I worked at the NASA Jet Propulsion Laboratory.
 
-There are few things more exciting or potentially revolutionary than machine learning right now, and I'm trying to get involved and contribute to that revolution. I also want to make the process of learning how to use machine learning tools easier, and I will try to update this site with my latest projects and instructional tutorials about machine learning and cool math topics. Please feel free to reach out if you have any questions.
+I am interested in machine learning, artificial intelligence, programming languages, and classical music. I am one of the authors of the Coral programming language and compiler, as well as the Titan simulation library.
 
 ------
 
 ### Internships
+
+* **Machine Learning and Software Engineering Intern** at the NASA Jet Propulsion Laboratory (May 2019 - August 2019)
+  - Built the NASA GPU Data Visualization library for processing and analyzing NASA climate data using GPUs.
+  - Winner of the 2019 NASA Data Visualization and Storytelling Competition Grand Prize for the data visualization and machine learning work.
 
 * **Machine Learning Researcher** at the Columbia Data Science Institute (May 2018 - Present)
   - Studied self-replication in artificial intelligence and machine learning, including self-replicating deep neural networks and their potential applications to biology and AI.
