@@ -12,6 +12,7 @@ I am interested in machine learning, artificial intelligence, programming langua
 
 ### Internships
 
+<div class="extra_padding_li" markdown="1">
 * **Machine Learning and Software Engineering Intern** at the NASA Jet Propulsion Laboratory (May 2019 - August 2019)
   - Built the NASA GPU Data Visualization library for processing and analyzing NASA climate data using GPUs.
   - Winner of the 2019 NASA Data Visualization and Storytelling Competition Grand Prize for the data visualization and machine learning work.
@@ -28,6 +29,7 @@ I am interested in machine learning, artificial intelligence, programming langua
   - Writing software which performs computational simulations of stellarator fusion reactors in C++, Python, and FORTRAN, and designing circuits for the main reactor field coils in LTSpice (and, god forbid, on a breadboard).
   - Writing a Python API for large segments of the Princeton Plasma Physics Laboratory (PPPL) FORTRAN VMEC library, and implementing custom optimization software for finding plasma volume extrema.
   - Using Labview and C to write real-time control software for stabilizing high currents in the stellarator field coils.
+</div>
 
 <div class="extra_padding" markdown="1">  
 * **Research Assistant** in the Barnard Chemistry Department (Fall 2015 - Present)

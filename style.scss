@@ -102,7 +102,7 @@ ul ul, ol ul {
   list-style-type: circle;
 }
 
-li {
+.extra_padding_li > ul > li {
   margin-bottom: 8px;
 }
 
