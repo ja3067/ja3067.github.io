@@ -3,12 +3,12 @@ layout: post
 title: "Creating C Extensions for Python with Numpy and CUDA (Part 2)"
 use_math: false
 excerpt: <div class="excerpt"><img src="/images/wordcloud2.png"></div>
-thumbnail: "https://ja3067.github.io/images/thumbnail.png"
+thumbnail: "https://jacobaustin123.github.io/images/thumbnail.png"
 ---
 
 <img src="/images/wordcloud2.png">
 
-_This is Part 2 of a series on the Python C API and CUDA/Numpy integration. Part 1 can be found [here](https://ja3067.github.io/cython/). A full Github repository containing all this code can be found [here](https://github.com/ja3067/Python-C-API-CUDA-Tutorial)._
+_This is Part 2 of a series on the Python C API and CUDA/Numpy integration. Part 1 can be found [here](https://jacobaustin123.github.io/cython/). A full Github repository containing all this code can be found [here](https://github.com/jacobaustin123/Python-C-API-CUDA-Tutorial)._
 
 We're going to dive right away into how to parse Numpy arrays in C and use CUDA to speed up our computations. Every Numpy object is internally a PyArrayObject, with a data pointer, a shape tuple (think arr.shape in Numpy), and a stride tuple that defines how to access the nth entry along each axis. While we don't need to get into the weeds, the stride is a tuple which specifies how many bytes you need to step along each axis to get to the next element, say from arr[0] to arr[1] or arr[:, 0] to arr[:, 1]. For a one-dimensional array, the stride will just be a one entry tuple whose size is the size of the datatype (8 in the case of doubles, 4 for 32bit floats, 4 for integers, etc). For 2-dimensional arrays, this can be more complicated, depending on whether the array is stored in row-major (the default) or column-major order. An excellent explanation can be found here!
 
@@ -243,4 +243,4 @@ Hello World
 
 I hope this was helpful. There’s so much more you can do, but struggling through the installation and setup procedure is the big bottleneck. Now you can look into Numpy internals, stride, multi-dimensional arrays, more complicated CUDA kernels, persistent CUDA objects, and more! Good luck!
 
-_All this code is available on a Github page [here](https://github.com/ja3067/Python-C-API-CUDA-Tutorial) with an installation script_
+_All this code is available on a Github page [here](https://github.com/jacobaustin123/Python-C-API-CUDA-Tutorial) with an installation script_

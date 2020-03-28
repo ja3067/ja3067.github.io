@@ -3,10 +3,10 @@ layout: post
 title: "Introducing the Coral Programming Language: A Fast Gradually Typed Python-Like Language with Type Checking"
 use_math: false
 excerpt: <div class="excerpt">Python is a wonderful language to use, but it has a few major faults. It's slow, and it will allow you to run almost any syntactically valid program, even if you just passed a string to that gcd function. This year, we've written the Coral Programming Language, a gradually typed Python variant that takes the optional type annotations introduced in Python 3.7 and uses them to perform type inferrence, type-checking, and optimization of Python code. This allows Coral to compile Python to binaries that can be orders of magnitude faster than Python, while catching many type errors at compile-time.<br></div>
-thumbnail: "https://ja3067.github.io/images/thumbnail.png"
+thumbnail: "https://jacobaustin123.github.io/images/thumbnail.png"
 ---
 
-The Coral Programming Language is a new programming language with Python syntax and powerful optional typing for improved performance and safety. With some limitations, any valid Python program can run in Coral, including those with the optional type hints introduced by Python 3.7. But unlike Python, these are not simply cosmetic. These type hints are used to perform partial type-inferrence on the code, which allows the compiler to optimize immutable objects onto the stack while also enforcing type-hints. See more on the [official Coral website](https://ja3067.github.io/Coral/).
+The Coral Programming Language is a new programming language with Python syntax and powerful optional typing for improved performance and safety. With some limitations, any valid Python program can run in Coral, including those with the optional type hints introduced by Python 3.7. But unlike Python, these are not simply cosmetic. These type hints are used to perform partial type-inferrence on the code, which allows the compiler to optimize immutable objects onto the stack while also enforcing type-hints. See more on the [official Coral website](https://jacobaustin123.github.io/Coral/).
 
 <div align="center"><img src="https://i.ibb.co/y5rZ1ft/coral3.png" width="75%"><br><br></div>
 
@@ -78,12 +78,12 @@ The core philosophy of Coral is that you don’t pay a penalty if you don’t ty
 
 # Installation
 
-The Coral GitHub page provides installers for MacOS and several Linux distributions. These installers can be found on the [Releases page](https://github.com/ja3067/Coral/releases). 
+The Coral GitHub page provides installers for MacOS and several Linux distributions. These installers can be found on the [Releases page](https://github.com/jacobaustin123/Coral/releases). 
 
 To build the language from the source, you must have OCaml, ocaml-llvm, and gcc/clang already installed. To build Coral from the source *with OCaml, ocaml-llvm, and gcc/clang already installed*, run:
 
 ```bash
-> git clone https://github.com/ja3067/Coral.git
+> git clone https://github.com/jacobaustin123/Coral.git
 > cd Coral
 > make
 ```
